@@ -59,10 +59,18 @@
 // the PDF itself, but picked up by presenter apps like pympress or pdfpc once
 // the deck is exported to a sidecar `.pdfpc` file (see the export command
 // documented in main.typ).
+//
+// `duration`: optional planned duration for the slide, in seconds. Every
+// slide emits an invisible metadata entry tagged `<slide-duration>` in
+// document order — unset slides default to 0. `build.sh` queries these to
+// produce a `main.times` sidecar file: a JSON array of `{idx, duration}`
+// objects, `idx` being the 0-based slide index (matching `main.pdfpc`'s
+// `idx` field), for the custom presentation tool.
 #let slide(
   title: auto,
   align: auto,
   notes: none,
+  duration: none,
   config: (:),
   repeat: auto,
   setting: body => body,
@@ -101,11 +109,14 @@
     body
   }
 
-  let bodies = if notes != none {
+  let extra = {
+    if notes != none { speaker-note(notes) }
+    [#metadata(if duration != none { duration } else { 0 })<slide-duration>]
+  }
+
+  let bodies = {
     let pos = bodies.pos()
-    pos.slice(0, -1) + (pos.last() + speaker-note(notes),)
-  } else {
-    bodies.pos()
+    pos.slice(0, -1) + (pos.last() + extra,)
   }
 
   touying-slide(self: self, config: config, repeat: repeat, setting: new-setting, composer: composer, ..bodies)

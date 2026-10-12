@@ -7,5 +7,7 @@ cd "$(dirname "$0")"
 
 typst compile main.typ main.pdf
 typst eval 'query(<pdfpc-file>).first().value' --root . --in main.typ --format json > main.pdfpc
+typst eval 'query(<slide-duration>).map(it => it.value)' --root . --in main.typ --format json \
+  | python3 -c 'import json, sys; durations = json.load(sys.stdin); json.dump([{"idx": i, "duration": d} for i, d in enumerate(durations)], sys.stdout, indent=2)' > main.times
 
-echo "Built main.pdf + main.pdfpc"
+echo "Built main.pdf + main.pdfpc + main.times"

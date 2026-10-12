@@ -35,7 +35,7 @@
 
 = Wissenschaftliche Methodik
 
-#slide(title: [Wissenschaftliche Methodik], notes: [
+#slide(title: [Wissenschaftliche Methodik], duration: 120, notes: [
   CRSIP-DM steht für Cross-Industry Standard Process for Data Mining
   Adsaption dieses Prozesses auf KI nach Bokranzt2023
   CRISP-DM wurde gewählt, da es zu KI passt, wegen datengetrieben
