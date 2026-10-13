@@ -13,7 +13,7 @@
 
 #title-slide(duration: 15)
 
-#slide(title: [Inhaltsverzeichnis])[
+#slide(title: [Agenda])[
   #context {
     let sections = query(heading.where(level: 1))
     enum(..sections.map(hd => hd.body))
