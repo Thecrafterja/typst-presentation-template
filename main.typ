@@ -11,7 +11,7 @@
   ),
 )
 
-#title-slide()
+#title-slide(duration: 15)
 
 #slide(title: [Inhaltsverzeichnis])[
   #components.adaptive-columns(outline(title: none, depth: 1))

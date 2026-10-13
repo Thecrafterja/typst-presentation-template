@@ -123,8 +123,14 @@
 })
 
 // Title slide: large title, subtitle, logo, author(s), date.
+//
+// `duration`: optional planned duration in seconds. Emits the same
+// `<slide-duration>` metadata entry as `slide()` so the title slide
+// occupies a slot in the `main.times` sidecar — otherwise every
+// subsequent entry would be shifted by one.
 #let title-slide(
   config: (:),
+  duration: none,
   ..args,
 ) = touying-slide-wrapper(self => {
   self = utils.merge-dicts(
@@ -151,6 +157,8 @@
     text(weight: "medium", info.author)
     linebreak()
     text(fill: _gray, utils.display-info-date(self))
+
+    [#metadata(if duration != none { duration } else { 0 })<slide-duration>]
   }
 
   touying-slide(self: self, body)
